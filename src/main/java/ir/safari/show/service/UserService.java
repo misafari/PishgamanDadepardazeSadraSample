@@ -27,6 +27,10 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new EntityNotFoundException("User Not Found"));
     }
 
+    public User findById(Long id) throws EntityNotFoundException {
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+    }
+
     @Transactional
     public void save(UserRequest userRequest) throws UniqueException {
         if (repository.existsByUsername(userRequest.getUsername()))
