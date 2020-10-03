@@ -13,7 +13,6 @@ import java.util.List;
 public class Performance extends AbstractJpaPersistable<Long> {
     private String songName;
     private LocalDate performanceDate;
-    private Integer averageScore;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Candidate candidate;

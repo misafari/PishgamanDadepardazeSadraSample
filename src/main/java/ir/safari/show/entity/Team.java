@@ -27,4 +27,9 @@ public class Team extends AbstractJpaPersistable<Long> {
         this.candidates = candidates;
         this.mentor = mentor;
     }
+
+    @PrePersist
+    public void prePersist() {
+        setCreateDate(LocalDate.now());
+    }
 }
