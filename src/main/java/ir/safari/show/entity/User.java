@@ -29,6 +29,8 @@ public class User extends AbstractJpaPersistable<Long> implements UserDetails {
     private Person person;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Team team;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
