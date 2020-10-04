@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CustomRestController(value = TeamController.ROOT_PATH)
 public class TeamController {
-    public final static String ROOT_PATH = "team";
+    public final static String ROOT_PATH = "/team";
     private final TeamService service;
 
     @PostMapping

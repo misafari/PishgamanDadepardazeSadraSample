@@ -9,18 +9,17 @@ import ir.safari.show.entity.User;
 import ir.safari.show.entity.dto.UserRequest;
 import ir.safari.show.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 @TransactionalService
 @RequiredArgsConstructor
-public class UserService  {
+public class UserService  implements UserDetailsService {
     private final UserRepository repository;
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User findByUsername(String username) throws EntityNotFoundException {
         return repository.findFirstByUsername(username)
@@ -64,10 +63,10 @@ public class UserService  {
 
 
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = repository.findFirstByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findFirstByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+    }
 
 }
