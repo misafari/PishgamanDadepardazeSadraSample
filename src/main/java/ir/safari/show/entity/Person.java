@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
-public class Person extends AbstractJpaPersistable<Long> {
+public class Person extends AbstractJpaPersistable {
     private String name;
     private String surname;
     private String nationalCode;

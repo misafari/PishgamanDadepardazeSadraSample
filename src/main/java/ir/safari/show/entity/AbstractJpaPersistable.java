@@ -11,10 +11,10 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class AbstractJpaPersistable<T extends Serializable> {
+public class AbstractJpaPersistable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private T id;
+    private Long id;
     @Version
     private int version;
 }

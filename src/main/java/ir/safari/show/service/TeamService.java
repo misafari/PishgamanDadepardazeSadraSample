@@ -6,6 +6,7 @@ import ir.safari.show.entity.Candidate;
 import ir.safari.show.entity.Team;
 import ir.safari.show.entity.User;
 import ir.safari.show.entity.dto.TeamRequest;
+import ir.safari.show.entity.dto.TeamResponse;
 import ir.safari.show.repository.TeamRepository;
 import ir.safari.show.utils.CollectionUtils;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,19 @@ public class TeamService {
         Team team = new Team(teamRequest.getName(), candidates, mentor);
         System.out.println(team);
         repository.save(team);
+    }
+
+    public Double getTeamScoreAverage(Long teamId) {
+        return repository.getTeamScore(teamId).stream()
+                .mapToDouble(a -> a).average().orElse(0D);
+    }
+
+    public List<TeamResponse> findAllForAdmin() {
+        return repository.findAllByAdmin();
+    }
+
+    public List<TeamResponse> findAllForMentor() {
+        String mentor = "mentor1"; // todo get From token
+        return repository.findAllByMentor(mentor);
     }
 }

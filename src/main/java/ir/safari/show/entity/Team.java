@@ -1,5 +1,6 @@
 package ir.safari.show.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Team extends AbstractJpaPersistable<Long> {
+public class Team extends AbstractJpaPersistable {
     private String name;
     private LocalDate createDate;
 

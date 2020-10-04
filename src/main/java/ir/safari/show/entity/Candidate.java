@@ -1,5 +1,6 @@
 package ir.safari.show.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-public class Candidate extends AbstractJpaPersistable<Long> {
+public class Candidate extends AbstractJpaPersistable {
     private String name;
     private String surname;
     @Column(unique = true)
@@ -19,5 +20,6 @@ public class Candidate extends AbstractJpaPersistable<Long> {
     private Team team;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "candidate")
+    @JsonBackReference
     private List<Performance> performances;
 }

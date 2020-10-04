@@ -5,7 +5,9 @@ import ir.safari.show.config.exception.EntityNotFoundException;
 import ir.safari.show.entity.Candidate;
 import ir.safari.show.entity.Performance;
 import ir.safari.show.entity.Score;
+import ir.safari.show.entity.User;
 import ir.safari.show.entity.dto.PerformanceRequest;
+import ir.safari.show.entity.dto.PerformanceResponse;
 import ir.safari.show.entity.dto.ScoreRequest;
 import ir.safari.show.repository.PerformanceRepository;
 import ir.safari.show.utils.CollectionUtils;
@@ -13,11 +15,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @TransactionalService
 @RequiredArgsConstructor
 public class PerformanceService {
-private final UserService userService;
+    private final UserService userService;
     private final PerformanceRepository repository;
     private final CandidateService candidateService;
 
@@ -29,7 +32,7 @@ private final UserService userService;
         performance.setCandidate(candidate);
 
         performance.setAverageScore(
-                performanceRequest.getScores().stream().mapToInt(ScoreRequest::getScore).average().getAsDouble()
+                performanceRequest.getScores().stream().mapToInt(ScoreRequest::getScore).average().orElse(0D)
         );
 
         for (ScoreRequest scoreRequest : performanceRequest.getScores()) {
@@ -47,5 +50,18 @@ private final UserService userService;
     public Performance findById(Long performanceId) throws EntityNotFoundException {
         return repository.findById(performanceId)
                 .orElseThrow(() -> new EntityNotFoundException("Performance not found"));
+    }
+
+    public List<PerformanceResponse> findByMentor() {
+        String mentorUsername = "mentor1"; // todo get from token
+        return repository.getAllByMentorUsername(mentorUsername);
+    }
+
+    public List<PerformanceResponse> findByAdmin() {
+        return repository.getAllForAdmin();
+    }
+
+    public List<PerformanceResponse> findByCandidate(Long candidateId) {
+        return repository.getAllByCandidate_Id(candidateId);
     }
 }

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Setter
 @Getter
-public class Score extends AbstractJpaPersistable<Long> {
+public class Score extends AbstractJpaPersistable {
     private Integer score;
     private LocalDate saveTime;
 

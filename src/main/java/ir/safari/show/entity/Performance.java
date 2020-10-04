@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Performance extends AbstractJpaPersistable<Long> {
+public class Performance extends AbstractJpaPersistable {
     private String songName;
     private Double averageScore;
 

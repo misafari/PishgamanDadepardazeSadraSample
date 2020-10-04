@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @ToString
-public class User extends AbstractJpaPersistable<Long> {
+public class User extends AbstractJpaPersistable {
     @Column(updatable = false, length = 20, nullable = false, unique = true)
     private String username;
     private String password;
