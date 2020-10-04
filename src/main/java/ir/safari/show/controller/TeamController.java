@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @CustomRestController(value = TeamController.ROOT_PATH)
 public class TeamController {
@@ -15,7 +17,7 @@ public class TeamController {
     private final TeamService service;
 
     @PostMapping
-    public void save(@RequestBody TeamRequest teamRequest) throws EntityNotFoundException {
+    public void save(@Valid @RequestBody TeamRequest teamRequest) throws EntityNotFoundException {
         service.save(teamRequest);
     }
 }

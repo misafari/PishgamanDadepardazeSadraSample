@@ -3,6 +3,7 @@ package ir.safari.show.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,14 +13,16 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Team extends AbstractJpaPersistable<Long> {
     private String name;
     private LocalDate createDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="TEAM_ID")
     private List<Candidate> candidates;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User mentor;
 
     public Team(String name, List<Candidate> candidates, User mentor) {

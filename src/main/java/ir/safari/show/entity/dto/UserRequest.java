@@ -1,11 +1,13 @@
 package ir.safari.show.entity.dto;
 
+import ir.safari.show.utils.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,4 +25,6 @@ public class UserRequest {
     private String mobile;
     @NotBlank
     private String nationalCode;
+    @NotNull
+    private List<UserRole> roleList;
 }

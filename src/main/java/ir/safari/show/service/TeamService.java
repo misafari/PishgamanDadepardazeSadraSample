@@ -29,7 +29,7 @@ public class TeamService {
             throw new EntityNotFoundException("candidate not found");
 
         Team team = new Team(teamRequest.getName(), candidates, mentor);
-
+        System.out.println(team);
         repository.save(team);
     }
 }

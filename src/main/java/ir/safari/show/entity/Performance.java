@@ -15,17 +15,16 @@ import java.util.List;
 @NoArgsConstructor
 public class Performance extends AbstractJpaPersistable<Long> {
     private String songName;
-    private LocalDate performanceDate;
     private Double averageScore;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Candidate candidate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "performance")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERFORMANCE_ID")
     private List<Score> scores;
 
     public Performance(PerformanceRequest performanceRequest) {
         this.songName = performanceRequest.getSongName();
-        this.performanceDate = performanceRequest.getPerformanceDate();
     }
 }

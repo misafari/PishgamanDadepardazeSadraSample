@@ -3,9 +3,9 @@ package ir.safari.show.entity;
 
 import ir.safari.show.utils.UserRole;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends AbstractJpaPersistable<Long> implements UserDetails {
+@ToString
+public class User extends AbstractJpaPersistable<Long> {
     @Column(updatable = false, length = 20, nullable = false, unique = true)
     private String username;
     private String password;
@@ -31,43 +32,44 @@ public class User extends AbstractJpaPersistable<Long> implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<UserRole> roles;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Team team;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="MENTOR_ID")
+    private List<Team> team;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.roles != null)
-            return roles.stream().map(UserRole::name)
-                    .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        else
-            return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        if (this.roles != null)
+//            return roles.stream().map(UserRole::name)
+//                    .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+//        else
+//            return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+//    }
+//
+//    public List<String> getAuthoritiesAsString() {
+//        return getAuthorities().stream().map(Objects::toString).collect(Collectors.toList());
+//    }
 
-    public List<String> getAuthoritiesAsString() {
-        return getAuthorities().stream().map(Objects::toString).collect(Collectors.toList());
-    }
-
-    @Override
-    @Transient
-    public boolean isAccountNonExpired() {
-        return !disable;
-    }
-
-    @Override
-    @Transient
-    public boolean isAccountNonLocked() {
-        return !disable;
-    }
-
-    @Override
-    @Transient
-    public boolean isCredentialsNonExpired() {
-        return !disable;
-    }
-
-    @Override
-    @Transient
-    public boolean isEnabled() {
-        return !disable;
-    }
+//    @Override
+//    @Transient
+//    public boolean isAccountNonExpired() {
+//        return !disable;
+//    }
+//
+//    @Override
+//    @Transient
+//    public boolean isAccountNonLocked() {
+//        return !disable;
+//    }
+//
+//    @Override
+//    @Transient
+//    public boolean isCredentialsNonExpired() {
+//        return !disable;
+//    }
+//
+//    @Override
+//    @Transient
+//    public boolean isEnabled() {
+//        return !disable;
+//    }
 }

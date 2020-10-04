@@ -10,17 +10,17 @@ import ir.safari.show.entity.dto.UserRequest;
 import ir.safari.show.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 @TransactionalService
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService  {
     private final UserRepository repository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User findByUsername(String username) throws EntityNotFoundException {
         return repository.findFirstByUsername(username)
@@ -42,15 +42,16 @@ public class UserService implements UserDetailsService {
 
         Person person = Person.createInstance(userRequest);
 
-
         repository.save(User.builder()
                 .username(userRequest.getUsername())
-                .password(bCryptPasswordEncoder.encode(userRequest.getPassword()))
+                .password(userRequest.getPassword())
                 .disable(false)
                 .person(person)
+                .roles(userRequest.getRoleList())
                 .build());
     }
 
+    @Transactional
     public void save(User user) {
         repository.save(user);
     }
@@ -63,10 +64,10 @@ public class UserService implements UserDetailsService {
 
 
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findFirstByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = repository.findFirstByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+//    }
 
 }

@@ -2,6 +2,7 @@ package ir.safari.show.service;
 
 import ir.safari.show.config.annotation.TransactionalService;
 import ir.safari.show.config.exception.EntityNotFoundException;
+import ir.safari.show.entity.Candidate;
 import ir.safari.show.entity.Performance;
 import ir.safari.show.entity.Score;
 import ir.safari.show.entity.dto.PerformanceRequest;
@@ -18,10 +19,14 @@ import java.util.ArrayList;
 public class PerformanceService {
 private final UserService userService;
     private final PerformanceRepository repository;
+    private final CandidateService candidateService;
 
     @Transactional
     public void save(PerformanceRequest performanceRequest) throws EntityNotFoundException {
         Performance performance = new Performance(performanceRequest);
+        Candidate candidate = candidateService.findById(performanceRequest.getCandidateId());
+
+        performance.setCandidate(candidate);
 
         performance.setAverageScore(
                 performanceRequest.getScores().stream().mapToInt(ScoreRequest::getScore).average().getAsDouble()
@@ -35,7 +40,6 @@ private final UserService userService;
 
             performance.getScores().add(score);
         }
-
 
         repository.save(performance);
     }

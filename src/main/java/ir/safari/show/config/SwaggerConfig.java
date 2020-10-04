@@ -22,14 +22,14 @@ public class SwaggerConfig {
                 .build();
     }
 
-    @Bean
-    public SecurityConfiguration security() {
-        return SecurityConfigurationBuilder.builder()
-                .clientId("NONE")
-                .clientSecret("")
-                .scopeSeparator(" ")
-                .useBasicAuthenticationWithAccessCodeGrant(true)
-                .build();
-    }
+//    @Bean
+//    public SecurityConfiguration security() {
+//        return SecurityConfigurationBuilder.builder()
+//                .clientId("NONE")
+//                .clientSecret("")
+//                .scopeSeparator(" ")
+//                .useBasicAuthenticationWithAccessCodeGrant(true)
+//                .build();
+//    }
 
 }
