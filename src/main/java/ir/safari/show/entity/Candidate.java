@@ -9,10 +9,10 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@Table(indexes = {@Index(name="Candidate-NationalCode-Index", columnList = "nationalCode", unique = true)})
 public class Candidate extends AbstractJpaPersistable<Long> {
     private String name;
     private String surname;
+    @Column(unique = true)
     private String nationalCode;
 
     @ManyToOne

@@ -31,6 +31,10 @@ public class UserService implements UserDetailsService {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("User Not Found"));
     }
 
+    public Boolean existByUsername(String username) {
+        return repository.existsByUsername(username);
+    }
+
     @Transactional
     public void save(UserRequest userRequest) throws UniqueException {
         if (repository.existsByUsername(userRequest.getUsername()))
@@ -45,6 +49,10 @@ public class UserService implements UserDetailsService {
                 .disable(false)
                 .person(person)
                 .build());
+    }
+
+    public void save(User user) {
+        repository.save(user);
     }
 
     @Transactional

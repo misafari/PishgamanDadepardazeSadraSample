@@ -21,7 +21,7 @@ public class UserController {
         service.save(userRequest);
     }
 
-    @PatchMapping("changeEnableDisable/{username}")
+    @DeleteMapping("changeEnableDisable/{username}")
     public void delete(@PathVariable String username) throws EntityNotFoundException {
         service.enableOrDisable(username);
     }

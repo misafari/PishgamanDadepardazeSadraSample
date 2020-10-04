@@ -1,6 +1,7 @@
 package ir.safari.show.entity;
 
 
+import ir.safari.show.utils.UserRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,14 +29,16 @@ public class User extends AbstractJpaPersistable<Long> implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Person person;
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
+    @Enumerated(EnumType.STRING)
+    private List<UserRole> roles;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Team team;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.roles != null)
-            return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+            return roles.stream().map(UserRole::name)
+                    .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         else
             return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
     }
