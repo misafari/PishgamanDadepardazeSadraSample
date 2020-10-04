@@ -11,5 +11,4 @@ public class AuthenticationResponse {
     private final String token;
     private final String username;
     private final List<String> roles;
-    private final List<String> groups;
 }
