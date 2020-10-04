@@ -26,7 +26,7 @@ public class SwaggerConfig {
     public SecurityConfiguration security() {
         return SecurityConfigurationBuilder.builder()
                 .clientId("NONE")
-                .clientSecret(CLIENT_SECRET)
+                .clientSecret("")
                 .scopeSeparator(" ")
                 .useBasicAuthenticationWithAccessCodeGrant(true)
                 .build();
