@@ -8,6 +8,7 @@ import ir.safari.show.service.UserService;
 import ir.safari.show.utils.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -18,7 +19,7 @@ import java.util.stream.Stream;
 public class Starter implements CommandLineRunner {
     private final UserService userService;
     private final CandidateService candidateService;
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override
@@ -36,7 +37,7 @@ public class Starter implements CommandLineRunner {
 
                     user.setUsername(mentor);
                     user.setDisable(false);
-                    user.setPassword("123");
+                    user.setPassword(bCryptPasswordEncoder.encode("123"));
                     user.setRoles(Collections.singletonList(mentor.equals("admin") ? UserRole.ROLE_ADMIN : UserRole.ROLE_MENTOR));
                     user.setPerson(person);
 
